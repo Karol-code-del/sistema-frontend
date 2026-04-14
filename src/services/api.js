@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API = axios.create({
   baseURL: 'https://api-mi-erp.onrender.com/api',
-  timeout: 5000,
+  timeout: 50000,
 });
 
 // Interceptor para agregar token en cada petición
