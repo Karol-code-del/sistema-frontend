@@ -165,11 +165,13 @@ const guardarVenta = async () => {
 
   cargando.value = true;
   try {
+    const usuario = JSON.parse(localStorage.getItem("usuario"));
     await ventasAPI.crear(nuevaVenta.value);
     alert('✅ Venta registrada exitosamente');
     nuevaVenta.value = { cliente: '', detalles: [] };
     cargarVentas();
-    cargarProductos(); // Recargar para actualizar stock
+    cargarProductos();
+    usuario_id: usuario.id// Recargar para actualizar stock
   } catch (err) {
     error.value = err.response?.data?.error || 'Error al guardar';
   } finally {
