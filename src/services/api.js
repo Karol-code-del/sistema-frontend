@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://api-mi-erp.onrender.com/api',
   timeout: 5000,
 });
 
