@@ -36,11 +36,6 @@
         ❌ {{ authStore.error }}
       </div>
 
-      <div class="credenciales-demo">
-        <h3>📝 Credenciales de Prueba:</h3>
-        <p><strong>Admin:</strong> admin@example.com / admin123</p>
-        <p><strong>Vendedor:</strong> vendedor@example.com / vendedor123</p>
-      </div>
     </div>
   </div>
 </template>
