@@ -177,18 +177,6 @@ const guardarVenta = async () => {
   }
 };
 
-  // Recargar datos
-  await cargarVentas();
-  await cargarProductos();
-
-} catch (err) {
-  error.value = err.response?.data?.error || 'Error al guardar';
-  console.error(err); // 👈 útil para depurar
-} finally {
-  cargando.value = false;
-  }
-};
-
 const formatearFecha = (fecha) => {
   return new Date(fecha).toLocaleDateString('es-ES');
 };
