@@ -165,17 +165,34 @@ const guardarVenta = async () => {
 
   cargando.value = true;
   try {
-    const usuario = JSON.parse(localStorage.getItem("usuario"));
-    await ventasAPI.crear(nuevaVenta.value);
-    alert('✅ Venta registrada exitosamente');
-    nuevaVenta.value = { cliente: '', detalles: [] };
-    cargarVentas();
-    cargarProductos();
-    usuario_id: usuario.id// Recargar para actualizar stock
-  } catch (err) {
-    error.value = err.response?.data?.error || 'Error al guardar';
-  } finally {
-    cargando.value = false;
+    // Obtener usuario del localStorage
+  const usuario = JSON.parse(localStorage.getItem("usuario"));
+  // Validar que exista usuario
+  if (!usuario) {
+    alert("❌ No hay usuario logueado");
+    return;
+  }
+  // Crear venta incluyendo el usuario
+  await ventasAPI.crear({
+    ...nuevaVenta.value,
+    usuario_id: usuario.id
+  });
+  alert('✅ Venta registrada exitosamente');
+  // Limpiar formulario
+  nuevaVenta.value = {
+    cliente: '',
+    detalles: []
+  };
+
+  // Recargar datos
+  await cargarVentas();
+  await cargarProductos();
+
+} catch (err) {
+  error.value = err.response?.data?.error || 'Error al guardar';
+  console.error(err); // 👈 útil para depurar
+} finally {
+  cargando.value = false;
   }
 };
 
