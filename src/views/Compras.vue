@@ -10,14 +10,14 @@
         <div class="seccion-detalles">
           <h4>Agregar Productos</h4>
           <div class="detalle-form">
-            <select v-model.number="nuevoDetalle.producto_id" required>
+            <select v-model.number="nuevoDetalle.producto_id">
               <option value="">-- Seleccionar Producto --</option>
               <option v-for="p in productos" :key="p.id" :value="p.id">
                 {{ p.nombre }} (Precio: ${{ p.precio_compra }})
               </option>
             </select>
-            <input v-model.number="nuevoDetalle.cantidad" type="number" placeholder="Cantidad" required min="1">
-            <input v-model.number="nuevoDetalle.precio_unitario" type="number" placeholder="Precio Unitario" step="0.01" required>
+            <input v-model.number="nuevoDetalle.cantidad" type="number" placeholder="Cantidad" min="1">
+            <input v-model.number="nuevoDetalle.precio_unitario" type="number" placeholder="Precio Unitario" step="0.01">
             <button type="button" @click="agregarDetalle" class="btn-agregar">Agregar</button>
           </div>
 
@@ -125,10 +125,17 @@ const cargarProductos = async () => {
 };
 
 const agregarDetalle = () => {
-  if (nuevoDetalle.value.producto_id && nuevoDetalle.value.cantidad > 0) {
-    nuevaCompra.value.detalles.push({ ...nuevoDetalle.value });
-    nuevoDetalle.value = { producto_id: '', cantidad: 1, precio_unitario: 0 };
+  if (!nuevoDetalle.value.producto_id) {
+    error.value = 'Selecciona un producto antes de agregar';
+    return;
   }
+  if (nuevoDetalle.value.cantidad <= 0) {
+    error.value = 'La cantidad debe ser mayor a 0';
+    return;
+  }
+  error.value = null;
+  nuevaCompra.value.detalles.push({ ...nuevoDetalle.value });
+  nuevoDetalle.value = { producto_id: '', cantidad: 1, precio_unitario: 0 };
 };
 
 const eliminarDetalle = (idx) => {
